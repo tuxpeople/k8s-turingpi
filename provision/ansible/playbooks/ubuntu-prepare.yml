@@ -1,0 +1,21 @@
+---
+- hosts:
+    - master
+    - worker
+  become: true
+  gather_facts: true
+  any_errors_fatal: true
+  pre_tasks:
+    - name: Pausing for 5 seconds...
+      pause:
+        seconds: 5
+    - name: Wait 600 seconds for target connection to become reachable/usable
+      ansible.builtin.wait_for_connection:
+    - name: fix ssh keys
+      local_action: ansible.builtin.command ~/iCloudDrive/Allgemein/bin/fix-ssh-key {{ inventory_hostname }}
+      become: false
+
+  roles:
+    - ubuntu
+    - robertdebock.roles.cron
+    - idiv-biodiversity.systemd_timesyncd
