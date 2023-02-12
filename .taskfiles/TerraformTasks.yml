@@ -9,7 +9,7 @@ tasks:
     cmds:
       - tfenv install 1.1.9
       - tfenv use 1.1.9
-      - terraform init -backend-config="path=${HOME}/Library/Mobile Documents/com~apple~CloudDocs/Dateien/Allgemein/tfstate/k8s-homelab.tfstate" {{.CLI_ARGS}}
+      - terraform init -backend-config="path=${HOME}/Library/Mobile Documents/com~apple~CloudDocs/Dateien/Allgemein/tfstate/k8s-turingpi.tfstate" {{.CLI_ARGS}}
 
   plan:
     desc: Show the changes terraform will make

@@ -9,7 +9,7 @@ vars:
   TERRAFORM_DIR: "{{.PROJECT_DIR}}/provision/terraform"
 
 env:
-  KUBECONFIG: "~/iCloudDrive/Allgemein/kubectl/homelab.yaml"
+  KUBECONFIG: "~/iCloudDrive/Allgemein/kubectl/turingpi.yaml"
 
 includes:
   ansible: .taskfiles/AnsibleTasks.yml

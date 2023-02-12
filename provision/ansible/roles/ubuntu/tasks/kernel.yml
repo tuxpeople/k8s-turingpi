@@ -6,7 +6,7 @@
   loop:
     - br_netfilter
     - overlay
-    - rbd
+    # - rbd
 
 - name: Enable kernel modules on boot
   ansible.builtin.copy:
@@ -16,4 +16,4 @@
   loop:
     - br_netfilter
     - overlay
-    - rbd
+    # - rbd
