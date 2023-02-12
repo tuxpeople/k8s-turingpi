@@ -6,3 +6,4 @@ resources:
   - https://github.com/jetstack/cert-manager/releases/download/v1.10.0/cert-manager.crds.yaml
   - metallb.yaml
   - traefik.yaml
+  - kube-prometheus-stack.yaml
