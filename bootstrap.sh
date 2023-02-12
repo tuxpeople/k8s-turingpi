@@ -5,8 +5,8 @@ cd ${_basedir} && cd $(git rev-parse --show-toplevel)
 
 git pull
 
-task terraform:init
-task terraform:forceapply
+# task terraform:init
+# task terraform:forceapply
 task precommit:init
 task precommit:update
 task ansible:deps
