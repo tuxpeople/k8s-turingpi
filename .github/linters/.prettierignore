@@ -1,5 +1,0 @@
-*.sops.*
-gotk-components.yaml
-.github/
-server/
-disabled/
