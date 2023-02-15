@@ -57,19 +57,6 @@
         regexp: "https://127.0.0.1:6443"
         replace: "https://{{ k3s_registration_address }}:6443"
 
-    - name: install pre-requisites
-      run_once: true
-      pip:
-        name:
-          - openshift
-          - pyyaml
-          - kubernetes
-      when:
-        - k3s_server_manifests_templates | length > 0
-            or k3s_server_manifests_urls | length > 0
-        - k3s_control_node is defined
-        - k3s_control_node
-
     - name: Resource Readiness Check
       run_once: true
       kubernetes.core.k8s_info:
