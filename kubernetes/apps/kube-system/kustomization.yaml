@@ -4,6 +4,6 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./kube-vip/ks.yaml
-  - ./local-path-provisioner/ks.yaml
+  - ./csi-driver-nfs/ks.yaml
   - ./metrics-server/ks.yaml
   - ./reloader/ks.yaml
