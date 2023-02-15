@@ -11,7 +11,7 @@ spec:
       chart: csi-driver-nfs
       version: v4.1.0
       sourceRef:
-        kind: GitRepository
+        kind: HelmRepository
         name: csi-driver-nfs
         namespace: flux-system
   maxHistory: 3
