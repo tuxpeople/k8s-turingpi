@@ -27,4 +27,4 @@ spec:
     keepHistory: false
   values:
     controller:
-      runOnControlPlane: true
+      runOnControlPlane: "true"
