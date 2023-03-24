@@ -28,9 +28,7 @@ spec:
   values:
     image:
       repository: codercom/code-server
-      pullPolicy: Always
-      # renovate: datasource=docker depName=codercom/code-server
-      tag: 3.9.0
+      tag: 4.11.0
     strategy:
       type: Recreate
     env:
