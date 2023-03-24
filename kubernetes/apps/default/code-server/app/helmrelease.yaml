@@ -26,6 +26,12 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    image:
+      repository: tdeutsch/debugcontainer
+      pullPolicy: Always
+      tag: latest
+    strategy:
+      type: Recreate
     addons:
       codeserver:
         enabled: true
