@@ -1,8 +1,12 @@
 nfsserver_exports:
   - share: /nfs
     hosts:
-      - name: "192.168.8.0/24"
+      - name: "*"
         options:
           - rw
-          - sync
-          - no_subtree_check
+          - async
+          - no_wdelay
+          - crossmnt
+          - insecure
+          - no_root_squash
+          - insecure_locks
