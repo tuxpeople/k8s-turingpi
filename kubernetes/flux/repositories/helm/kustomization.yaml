@@ -15,4 +15,4 @@ resources:
   - ./stakater.yaml
   - ./weave-gitops.yaml
   - ./csi-driver-nfs.yaml
-  -./prometheus-community.yaml
+  - ./prometheus-community.yaml
