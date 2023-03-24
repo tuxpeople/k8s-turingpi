@@ -37,7 +37,7 @@ spec:
       TZ: ${TIMEZONE}
       PUID: 911
       PGID: 911
-      PROXY_DOMAIN: code.${SECRET_DOMAIN_ME}
+      PROXY_DOMAIN: code.${SECRET_DOMAIN}
       PASSWORD: ${CODESERVER_PASSWORD}
       DOCKER_MODS: linuxserver/mods:universal-git|linuxserver/mods:universal-package-install
       DEFAULT_WORKSPACE: /config/workspace
