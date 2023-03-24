@@ -5,4 +5,4 @@ originRequest: # Top-level configuration
   connectTimeout: 30s
 
 ingress:
-  - service: ingress-nginx-controller:80
+  - service: http://ingress-nginx-controller:80
