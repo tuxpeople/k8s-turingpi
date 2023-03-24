@@ -13,5 +13,5 @@ parameters:
   # csi.storage.k8s.io/provisioner-secret-namespace: "default"
 reclaimPolicy: Delete
 volumeBindingMode: Immediate
-mountOptions:
-  - nfsvers=4.1
+# mountOptions:
+#   - nfsvers=4.1
