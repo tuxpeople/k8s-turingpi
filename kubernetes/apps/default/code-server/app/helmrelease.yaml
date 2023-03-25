@@ -34,21 +34,21 @@ spec:
     env:
       TZ: ${TIMEZONE}
       PASSWORD: ${CODESERVER_PASSWORD}
-      START_DIR: /config
+      # START_DIR: /config
     service:
       main:
         ports:
           http:
             port: 8080
-    resources:
-      requests:
-        cpu: 10m
-        memory: 50Mi
-      limits:
-        cpu: 1000m
-        memory: 7500Mi
-    securityContext:
-      runAsUser: 0
+    # resources:
+    #   requests:
+    #     cpu: 10m
+    #     memory: 50Mi
+    #   limits:
+    #     cpu: 1000m
+    #     memory: 7500Mi
+    # securityContext:
+    #   runAsUser: 0
     ingress:
       main:
         enabled: true
@@ -64,11 +64,11 @@ spec:
                 pathType: Prefix
                 service:
                   port: 8080
-    persistence:
-      config:
-        enabled: true
-        type: emptyDir
-        accessMode: ReadWriteOnce
-        size: 5Gi
-        mountPath: /config
+    # persistence:
+    #   config:
+    #     enabled: true
+    #     type: emptyDir
+    #     accessMode: ReadWriteOnce
+    #     size: 5Gi
+    #     mountPath: /config
 # docker run --entrypoint /bin/sleep docker.io/fluxcd/flux-cli:v0.37.0 inf
