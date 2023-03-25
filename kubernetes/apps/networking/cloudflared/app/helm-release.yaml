@@ -26,7 +26,6 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    replicas: 2
     image:
       repository: cloudflare/cloudflared
       tag: "2023.3.1"
@@ -43,7 +42,11 @@ spec:
         ports:
           http:
             port: 9090
-
+    controller:
+      replicas: 2
+      strategy: RollingUpdate
+      annotations:
+        reloader.stakater.com/auto: "true"
     persistence:
       config:
         enabled: true
