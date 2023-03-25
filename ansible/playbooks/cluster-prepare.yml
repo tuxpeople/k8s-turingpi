@@ -134,6 +134,14 @@
             policy: targeted
           when: ansible_facts['distribution'] == 'Fedora'
       notify: Reboot
+    # - name: timesyncd
+    #   ansible.builtin.include_role:
+    #     name: idiv-biodiversity.systemd_timesyncd
+    #     public: true
+    - name: raspberrypi
+      ansible.builtin.include_role:
+        name: raspberrypi
+        public: true
 
   handlers:
     - name: Reboot

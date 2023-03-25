@@ -30,7 +30,7 @@ spec:
       repository: ghcr.io/linuxserver/code-server
       pullPolicy: Always
       # renovate: datasource=docker depName=ghcr.io/linuxserver/code-server
-      tag: 4.10.0
+      tag: 4.11.0
     strategy:
       type: Recreate
     env:
@@ -74,7 +74,7 @@ spec:
     persistence:
       config:
         enabled: true
-        type: emptyDir
+        type: pvc
         accessMode: ReadWriteOnce
         size: 5Gi
         mountPath: /config

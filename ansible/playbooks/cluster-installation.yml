@@ -57,6 +57,14 @@
         regexp: "https://127.0.0.1:6443"
         replace: "https://{{ k3s_registration_address }}:6443"
 
+    - name: Copy kubeconfig to target
+      run_once: true
+      ansible.builtin.copy:
+        src: "{{ repo_abs_path.stdout }}/kubeconfig"
+        dest: "{{ kubeconfig_target }}"
+      delegate_to: localhost
+      become: false
+
     - name: Resource Readiness Check
       run_once: true
       kubernetes.core.k8s_info:
