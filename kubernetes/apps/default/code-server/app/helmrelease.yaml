@@ -71,11 +71,11 @@ spec:
                 pathType: Prefix
                 service:
                   port: 8443
-    # persistence:
-    #   config:
-    #     enabled: true
-    #     type: emptyDir
-    #     accessMode: ReadWriteOnce
-    #     size: 5Gi
-    #     mountPath: /config
+    persistence:
+      config:
+        enabled: true
+        type: emptyDir
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        mountPath: /config
 # docker run --entrypoint /bin/sleep docker.io/fluxcd/flux-cli:v0.37.0 inf
