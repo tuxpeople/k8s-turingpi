@@ -27,28 +27,35 @@ spec:
     keepHistory: false
   values:
     image:
-      repository: codercom/code-server
-      tag: 4.11.0
+      repository: ghcr.io/linuxserver/code-server
+      pullPolicy: Always
+      # renovate: datasource=docker depName=ghcr.io/linuxserver/code-server
+      tag: 4.10.0
     strategy:
       type: Recreate
     env:
       TZ: ${TIMEZONE}
+      PUID: 911
+      PGID: 911
+      PROXY_DOMAIN: code.${SECRET_DOMAIN}
       PASSWORD: ${CODESERVER_PASSWORD}
-      # START_DIR: /config
+      DOCKER_MODS: linuxserver/mods:universal-git|linuxserver/mods:universal-package-install
+      DEFAULT_WORKSPACE: /config/workspace
+      # DOCKER_MODS: "linuxserver/mods:code-server-docker|linuxserver/mods:code-server-python3|linuxserver/mods:code-server-shellcheck|linuxserver/mods:code-server-terraform|linuxserver/mods:universal-git|linuxserver/mods:universal-tshoot|linuxserver/mods:universal-package-install"
+      # INSTALL_PACKAGES: "rsync|git|nginx"
+      # INSTALL_PIP_PACKAGES: "apprise"
     service:
       main:
         ports:
           http:
-            port: 8080
+            port: 8443
     # resources:
     #   requests:
     #     cpu: 10m
     #     memory: 50Mi
     #   limits:
-    #     cpu: 1000m
-    #     memory: 7500Mi
-    # securityContext:
-    #   runAsUser: 0
+    #     cpu: 500m
+    #     memory: 200Mi
     ingress:
       main:
         enabled: true
@@ -63,7 +70,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  port: 8080
+                  port: 8443
     # persistence:
     #   config:
     #     enabled: true
