@@ -56,7 +56,7 @@ spec:
         enabled: true
         ingressClassName: nginx
         annotations:
-          external-dns.alpha.kubernetes.io/target: "ipv4-turingpi.${SECRET_DOMAIN}"
+          external-dns.alpha.kubernetes.io/target: "${SECRET_CLOUDFLARE_TUNNEL_ID}.cfargotunnel.com"
           hajimari.io/icon: video-input-antenna
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
@@ -72,3 +72,39 @@ spec:
         memory: 10Mi
       limits:
         memory: 50Mi
+    addons:
+      codeserver:
+        enabled: true
+        image:
+          repository: codercom/code-server
+          tag: 4.11.0
+        workingDir: "/config"
+        args:
+          - --auth
+          - "none"
+          - --user-data-dir
+          - "/config/.vscode"
+          - --extensions-dir
+          - "/config/.vscode"
+        ingress:
+          enabled: true
+          annotations:
+            kubernetes.io/ingress.class: "nginx"
+          hosts:
+            - host: app-config.domain.tld
+              paths:
+                - path: /
+                  pathType: Prefix
+          tls:
+            - hosts:
+                - app-config.domain.tld
+        volumeMounts:
+          - name: config
+            mountPath: /config
+    persistence:
+      config:
+        enabled: true
+        type: emptyDir
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        mountPath: /config
