@@ -86,8 +86,6 @@ spec:
       gitconfig:
         enabled: true
         type: configMap
-        name: gitconfig
-        mountPath: /config/.gitconfig
         items:
           - key: .gitconfig
             path: .gitconfig
