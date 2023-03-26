@@ -85,6 +85,7 @@ spec:
         mountPath: /config/.ssh
       gitconfig:
         enabled: true
+        name: gitconfig
         type: configMap
         items:
           - key: .gitconfig
