@@ -78,4 +78,20 @@ spec:
         accessMode: ReadWriteOnce
         size: 5Gi
         mountPath: /config
+      ssh-keys:
+        enabled: true
+        type: secret
+        name: ssh-keys
+        mountPath: /config/.ssh
+      gitconfig:
+        enabled: true
+        type: configMap
+        name: gitconfig
+        mountPath: /config/.gitconfig
+        items:
+          - key: .gitconfig
+            path: .gitconfig
+        subPath:
+          - path: .gitconfig
+            mountPath: /config/.gitconfig
 # docker run --entrypoint /bin/sleep docker.io/fluxcd/flux-cli:v0.37.0 inf

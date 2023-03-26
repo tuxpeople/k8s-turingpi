@@ -1,0 +1,9 @@
+apiVersion: v1
+data:
+  .gitconfig: |
+    [user]
+            name = Thomas Deutsch
+            email = thomas@tuxpeople.org
+kind: ConfigMap
+metadata:
+  name: gitconfig
