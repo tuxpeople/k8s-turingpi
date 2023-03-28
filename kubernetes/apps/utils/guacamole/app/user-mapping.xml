@@ -1,0 +1,15 @@
+<user-mapping>
+
+    <authorize
+        username="tdeutsch">
+
+        <connection name="test">
+            <protocol>ssh</protocol>
+            <param name="hostname">10.20.30.40</param>
+            <param name="port">22</param>
+            <param name="password"></param>
+        </connection>
+
+    </authorize>
+
+</user-mapping>
