@@ -52,10 +52,22 @@ spec:
           traefik.ingress.kubernetes.io/router.tls: "true"
           external-dns/is-public: "true"
           external-dns.alpha.kubernetes.io/target: "${SECRET_CLOUDFLARE_TUNNEL_ID}.cfargotunnel.com"
-          nginx.ingress.kubernetes.io/proxy-body-size: 1024m
-          nginx.ingress.kubernetes.io/proxy-connect-timeout: "30"
-          nginx.ingress.kubernetes.io/proxy-read-timeout: "1800"
-          nginx.ingress.kubernetes.io/proxy-send-timeout: "1800"
+          nginx.ingress.kubernetes.io/server-snippets: |
+            location / {
+              proxy_set_header Upgrade $http_upgrade;
+              proxy_http_version 1.1;
+              proxy_set_header X-Forwarded-Host $http_host;
+              proxy_set_header X-Forwarded-Proto $scheme;
+              proxy_set_header X-Forwarded-For $remote_addr;
+              proxy_set_header Host $host;
+              proxy_set_header Connection "upgrade";
+              proxy_cache_bypass $http_upgrade;
+              }
+
+          # nginx.ingress.kubernetes.io/proxy-body-size: 1024m
+          # nginx.ingress.kubernetes.io/proxy-connect-timeout: "30"
+          # nginx.ingress.kubernetes.io/proxy-read-timeout: "1800"
+          # nginx.ingress.kubernetes.io/proxy-send-timeout: "1800"
         hosts:
           - host: &host "guac.${SECRET_DOMAIN}"
             paths:
