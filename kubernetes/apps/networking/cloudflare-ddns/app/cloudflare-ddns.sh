@@ -2,6 +2,7 @@
 
 set -o nounset
 set -o errexit
+set -x
 
 current_ipv4="$(curl https://ipv4.icanhazip.com/)"
 zone_id=$(curl -X GET \
