@@ -52,8 +52,6 @@ spec:
           traefik.ingress.kubernetes.io/router.tls: "true"
           external-dns/is-public: "true"
           external-dns.alpha.kubernetes.io/target: "${SECRET_CLOUDFLARE_TUNNEL_ID}.cfargotunnel.com"
-          nginx.ingress.kubernetes.io/configuration-snippet: |
-            more_set_headers "X-Forwarded-For $http_x_forwarded_for";
         hosts:
           - host: &host "guac.${SECRET_DOMAIN}"
             paths:
