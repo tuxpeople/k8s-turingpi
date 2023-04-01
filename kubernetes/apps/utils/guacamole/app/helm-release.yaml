@@ -30,7 +30,7 @@ spec:
       tag: 1.5.0
     env:
       TZ: "${TIMEZONE}"
-      GUACD_HOSTNAME: "guac.${SECRET_DOMAIN}/"
+      GUACD_HOSTNAME: "guac.${SECRET_DOMAIN}"
     controller:
       replicas: 1
       strategy: RollingUpdate
