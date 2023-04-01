@@ -60,8 +60,8 @@ spec:
         hosts:
           - host: &host "guac.${SECRET_DOMAIN}"
             paths:
-              - path: /
-                pathType: Prefix
+              - path: ""
+                pathType: ImplementationSpecific
         tls:
           - hosts:
               - *host
