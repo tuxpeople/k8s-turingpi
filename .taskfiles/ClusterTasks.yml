@@ -2,7 +2,6 @@
 version: "3"
 
 tasks:
-
   verify:
     desc: Verify flux meets the prerequisites
     cmds:
@@ -26,7 +25,7 @@ tasks:
   reconcile:
     desc: Force update Flux to pull in changes from your Git repository
     cmds:
-      - flux reconcile -n flux-system source git k8s-turingpi
+      - flux reconcile -n flux-system source git flux-repo
       - flux reconcile -n flux-system kustomization cluster
 
   hr-restart:
