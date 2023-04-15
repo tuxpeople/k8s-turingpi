@@ -27,7 +27,7 @@ spec:
   wait: false
   sourceRef:
     kind: GitRepository
-    name: flux-repo
+    name: k8s-flux
   decryption:
     provider: sops
     secretRef:

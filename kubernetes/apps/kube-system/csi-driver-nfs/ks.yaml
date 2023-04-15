@@ -5,13 +5,13 @@ metadata:
   name: cluster-apps-csi-driver-nfs
   namespace: flux-system
   labels:
-    substitution.flux.home.arpa/disabled: 'true'
+    substitution.flux.home.arpa/disabled: "true"
 spec:
   path: ./kubernetes/apps/kube-system/csi-driver-nfs/app
   prune: true
   sourceRef:
     kind: GitRepository
-    name: flux-repo
+    name: k8s-flux
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
@@ -27,7 +27,7 @@ metadata:
   name: cluster-apps-csi-driver-nfs-sc
   namespace: flux-system
   labels:
-    substitution.flux.home.arpa/disabled: 'true'
+    substitution.flux.home.arpa/disabled: "true"
 spec:
   path: ./kubernetes/apps/kube-system/csi-driver-nfs/sc
   prune: true
@@ -35,7 +35,7 @@ spec:
     - name: cluster-apps-csi-driver-nfs
   sourceRef:
     kind: GitRepository
-    name: flux-repo
+    name: k8s-flux
   healthChecks:
     - apiVersion: storage.k8s.io/v1
       kind: StorageClass

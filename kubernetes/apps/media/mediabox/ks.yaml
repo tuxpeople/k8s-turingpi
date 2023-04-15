@@ -9,7 +9,7 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: flux-repo
+    name: k8s-flux
   healthChecks:
     - apiVersion: apps/v1
       kind: Deployment

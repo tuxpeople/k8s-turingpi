@@ -9,7 +9,7 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: flux-repo
+    name: k8s-flux
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
@@ -31,7 +31,7 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: flux-repo
+    name: k8s-flux
   interval: 30m
   retryInterval: 1m
   timeout: 3m

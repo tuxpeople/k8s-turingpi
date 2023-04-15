@@ -6,13 +6,13 @@ metadata:
   name: cluster-apps-guacamole
   namespace: flux-system
   labels:
-    substitution.flux.home.arpa/enabled: 'true'
+    substitution.flux.home.arpa/enabled: "true"
 spec:
   path: ./kubernetes/apps/utils/guacamole/app
   prune: true
   sourceRef:
     kind: GitRepository
-    name: flux-repo
+    name: k8s-flux
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
