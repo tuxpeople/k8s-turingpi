@@ -5,7 +5,7 @@ metadata:
   name: print
 spec:
   friendlyName: K8S print
-  url: https://print.${SECRET_DOMAIN_ME}
+  url: https://print.${SECRET_DOMAIN_K8S}
   type: HTTPS
   httpMethod: GET
   interval: 300
