@@ -1,0 +1,313 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: grafana
+  namespace: monitoring
+spec:
+  interval: 15m
+  timeout: 10m
+  chart:
+    spec:
+      chart: grafana
+      version: 6.52.9
+      sourceRef:
+        kind: HelmRepository
+        name: grafana-charts
+        namespace: flux-system
+  test:
+    enable: false  # Enable helm test
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  rollback:
+    timeout: 10m
+    cleanupOnFail: true
+    recreate: true
+  values:
+    replicas: 1
+    rbac:
+      pspEnabled: false
+    testFramework:
+      enabled: false
+    # admin:
+    #   existingSecret: grafana-admin
+    envFromSecrets:
+      - name: grafana
+    grafana.ini:
+      server:
+        root_url: https://grafana.${SECRET_DOMAIN_ME}
+      security:
+        cookie_secure: true
+      log.console:
+        level: debug
+      auth:
+        signout_redirect_url: https://auth.${SECRET_DOMAIN_ME}/logout
+        oauth_auto_login: false
+      auth.generic_oauth:
+        enabled: true
+        name: Homelab Account
+        icon: signin
+        client_id: grafana
+        client_secret: ${SECRET_OIDC_CLIENT_SECRET_GRAFANA}
+        scopes: openid profile email groups
+        empty_scopes: false
+        auth_url: https://auth.${SECRET_DOMAIN_ME}/api/oidc/authorization
+        token_url: https://auth.${SECRET_DOMAIN_ME}/api/oidc/token
+        api_url: https://auth.${SECRET_DOMAIN_ME}/api/oidc/userinfo
+        login_attribute_path: preferred_username
+        groups_attribute_path: groups
+        name_attribute_path: name
+        use_pkce: true
+      auth.generic_oauth.group_mapping:
+        role_attribute_path: |
+          contains(groups[*], 'admins') && 'Admin' || contains(groups[*], 'grafana') && 'Viewer'
+        org_id: 1
+      auth.basic:
+        enabled: false
+        # disable_login_form: false
+      auth.anonymous:
+        enabled: false
+        org_name: Homelab
+        org_id: 1
+        org_role: Viewer
+    dashboardProviders:
+      dashboardproviders.yaml:
+        apiVersion: 1
+        providers:
+          - name: default
+            orgId: 1
+            folder: ''
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/default
+          - name: unifi
+            orgId: 1
+            folder: Unifi
+            type: file
+            disableDeletion: false
+            editable: false
+            options:
+              path: /var/lib/grafana/dashboards/unifi
+          - name: gitops
+            orgId: 1
+            folder: GitOps
+            type: file
+            disableDeletion: false
+            editable: false
+            options:
+              path: /var/lib/grafana/dashboards/gitops
+          - name: systems
+            orgId: 1
+            folder: Systems
+            type: file
+            disableDeletion: false
+            editable: false
+            options:
+              path: /var/lib/grafana/dashboards/systems
+          - name: networking
+            orgId: 1
+            folder: Networking
+            type: file
+            disableDeletion: false
+            editable: false
+            options:
+              path: /var/lib/grafana/dashboards/networking
+          - name: apps
+            orgId: 1
+            folder: Apps
+            type: file
+            disableDeletion: false
+            editable: false
+            options:
+              path: /var/lib/grafana/dashboards/apps
+    datasources:
+      datasources.yaml:
+        apiVersion: 1
+        deleteDatasources:
+          - name: Loki
+            orgId: 1
+        datasources:
+          - name: Prometheus
+            type: prometheus
+            access: proxy
+            url: http://prometheus-prometheus.monitoring.svc.cluster.local:9090
+            isDefault: true
+          - name: Loki
+            type: loki
+            access: proxy
+            url: http://loki-read.monitoring.svc.cluster.local:3100
+    dashboards:
+      unifi:
+        # Ref: https://grafana.com/grafana/dashboards/11315/revisions
+        unifi-client-insights:
+          gnetId: 11315
+          revision: 8
+          datasource: Prometheus
+        # Ref: https://grafana.com/grafana/dashboards/11311/revisions
+        unifi-network-sites:
+          gnetId: 11311
+          revision: 4
+          datasource: Prometheus
+        # Ref: https://grafana.com/grafana/dashboards/11314/revisions
+        unifi-uap-insights:
+          gnetId: 11314
+          revision: 9
+          datasource: Prometheus
+        # Ref: https://grafana.com/grafana/dashboards/11312/revisions
+        unifi-usw-insights:
+          gnetId: 11312
+          revision: 8
+          datasource: Prometheus
+        # ?? Ref: https://grafana.com/grafana/dashboards/11313/revisions
+        up_usg_insights:
+          gnetId: 11313
+          datasource: Prometheus
+          revision: 8
+          # ?? Ref: https://grafana.com/grafana/dashboards/11310/revisions
+          # up_client-dpi:
+          #   gnetId: 11310
+          #   datasource: Prometheus
+          #   revision: 4
+      apps:
+        octoprint:
+          url: https://raw.githubusercontent.com/tg44/OctoPrint-prometheus-Exporter/master/extras/octoprint-grafana.json
+          datasource: Prometheus
+        minio:
+          gnetId: 13502
+          revision: 10
+          datasource: Prometheus
+        sonarrv3:
+          gnetId: 12530
+          revision: 2
+          datasource: Prometheus
+        radarrv3:
+          gnetId: 12896
+          revision: 1
+          datasource: Prometheus
+        mysql-overview:
+          gnetId: 7362
+          revision: 5
+          datasource: Prometheus
+        mysql-quickstart:
+          gnetId: 14057
+          revision: 1
+          datasource: Prometheus
+      gitops:
+        flux-cluster:
+          url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/monitoring-config/dashboards/cluster.json
+          datasource: Prometheus
+        flux-control-plane:
+          url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/monitoring-config/dashboards/control-plane.json
+          datasource: Prometheus
+        logs:
+          url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/monitoring-config/dashboards/logs.json
+          datasource: Loki
+      systems:
+        # Ref: https://grafana.com/grafana/dashboards/1860/revisions
+        node-exporter-full:
+          gnetId: 1860
+          datasource: Prometheus
+          revision: 23
+        # Ref: https://grafana.com/grafana/dashboards/13516/revisions
+        synology:
+          gnetId: 13516
+          datasource: Prometheus
+          revision: 3
+      networking:
+        # Ref: https://grafana.com/grafana/dashboards/4475/revisions
+        traefik:
+          gnetId: 4475
+          datasource: Prometheus
+          revision: 5
+        # Ref: https://grafana.com/grafana/dashboards/14336/revisions
+        speedtest:
+          gnetId: 14336
+          revision: 2
+          datasource: Prometheus
+        # Ref: https://grafana.com/grafana/dashboards/9955/revisions
+        uptimerobot:
+          gnetId: 9955
+          datasource: Prometheus
+          revision: 1
+        # Ref: https://grafana.com/grafana/dashboards/14127/revisions
+        metallb:
+          gnetId: 14127
+          revision: 1
+          datasource: Prometheus
+        # Ref: https://grafana.com/grafana/dashboards/14500/revisions
+        agent-metrics-1.10:
+          gnetId: 14500
+          revision: 1
+          datasource: Prometheus
+        # Ref: https://grafana.com/grafana/dashboards/14502/revisions
+        hubble-metrics-1.10:
+          gnetId: 14502
+          revision: 1
+          datasource: Prometheus
+        # Ref: https://grafana.com/grafana/dashboards/14501/revisions
+        operator-metrics-1.10:
+          gnetId: 14501
+          revision: 1
+          datasource: Prometheus
+        # https://grafana.com/grafana/dashboards/13942/revisions
+        wireguard:
+          gnetId: 13942
+          datasource: Prometheus
+          revision: 1
+    sidecar:
+      dashboards:
+        enabled: true
+        searchNamespace: ALL
+        label: grafana_dashboard
+        folderAnnotation: grafana_folder
+        provider:
+          foldersFromFilesStructure: true
+      datasources:
+        enabled: true
+        searchNamespace: ALL
+    plugins:
+      - natel-discrete-panel
+      - pr0ps-trackmap-panel
+      - grafana-piechart-panel
+      - vonage-status-panel
+      - grafana-worldmap-panel
+      - grafana-clock-panel
+      - grafana-singlestat-panel
+    serviceMonitor:
+      enabled: true
+    ingress:
+      enabled: true
+      hosts:
+        - grafana.${SECRET_DOMAIN_ME}
+      annotations:
+        kubernetes.io/ingress.class: nginx
+        external-dns/is-public: 'true'
+        external-dns.alpha.kubernetes.io/target: ipv4.${SECRET_DOMAIN_K8S}
+        hajimari.io/enable: 'true'
+        hajimari.io/icon: mdi:chart-arc
+      tls:
+        - secretName: ${SECRET_DOMAIN_ME//./-}-tls
+          hosts:
+            - grafana.${SECRET_DOMAIN_ME}
+    enabled: true
+    persistence:
+      enabled: false
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - grafana
+              topologyKey: kubernetes.io/hostname

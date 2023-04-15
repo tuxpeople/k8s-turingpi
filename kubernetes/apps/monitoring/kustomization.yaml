@@ -5,3 +5,13 @@ resources:
   - ./namespace.yaml
   - ./kubernetes-dashboard/ks.yaml
   - ./prometheus/ks.yaml
+  - ./uptimerobot-operator/ks.yaml
+  - ./grafana/ks.yaml
+  - ./thanos/ks.yaml
+  - ./mystrom-exporter/ks.yaml
+  - ./github-exporter/ks.yaml
+  - ./speedtest-exporter/ks.yaml
+  - ./unifi-poller/ks.yaml
+  - ./vmware-exporter/ks.yaml
+  - ./loki/ks.yaml
+  - ./blackbox-exporter/ks.yaml
