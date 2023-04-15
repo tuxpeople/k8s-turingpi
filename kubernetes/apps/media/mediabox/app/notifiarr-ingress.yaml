@@ -1,0 +1,27 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: notifiarr
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    external-dns.alpha.kubernetes.io/target: ipv4.${SECRET_DOMAIN_K8S}
+    external-dns/is-public: 'true'
+    hajimari.io/enable: 'true'
+    hajimari.io/icon: filmstrip
+spec:
+  tls:
+    - secretName: ${SECRET_DOMAIN_ME//./-}-tls
+      hosts:
+        - notifiarr.${SECRET_DOMAIN_ME}
+  rules:
+    - host: notifiarr.${SECRET_DOMAIN_ME}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: mediabox
+                port:
+                  name: notifiarr

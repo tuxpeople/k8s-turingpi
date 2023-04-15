@@ -1,0 +1,27 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: cluster-apps-sharry
+  namespace: flux-system
+spec:
+  path: ./kubernetes/apps/default/sharry/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-repo
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+      kind: HelmRelease
+      name: sharry
+      namespace: default
+  dependsOn:
+    - name: cluster-apps-external-secrets-secretstores
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
+  postBuild:
+    substituteFrom:
+      - kind: Secret
+        name: sharry-secrets
+        namespace: default
