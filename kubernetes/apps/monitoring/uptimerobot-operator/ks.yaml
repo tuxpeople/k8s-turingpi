@@ -9,7 +9,7 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: k8s-flux
+    name: flux-repo
   dependsOn:
     - name: cluster-apps-external-secrets-secretstores
   healthChecks:
