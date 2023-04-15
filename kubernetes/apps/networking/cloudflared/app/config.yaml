@@ -1,8 +1,7 @@
 ---
 tunnel: ${SECRET_CLOUDFLARE_TUNNEL_ID}
 credentials-file: /etc/cloudflared/credentials.json
-originRequest: # Top-level configuration
+originRequest:  # Top-level configuration
   connectTimeout: 30s
-
 ingress:
   - service: http://ingress-nginx-controller:80

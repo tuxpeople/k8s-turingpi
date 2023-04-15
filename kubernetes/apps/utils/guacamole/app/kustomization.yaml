@@ -1,3 +1,4 @@
+---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: utils
@@ -6,14 +7,14 @@ commonLabels:
   app.kubernetes.io/instance: *app
 resources:
   - helm-release.yaml
-#configMapGenerator:
+# configMapGenerator:
 #  - name: usermapping-cm
 #    files:
 #      - user-mapping.xml
 #  - name: guacprop-cm
 #    files:
 #      - guacamole.properties
-#generatorOptions:
+# generatorOptions:
 #  disableNameSuffixHash: true
 #  annotations:
 #    kustomize.toolkit.fluxcd.io/substitute: disabled

@@ -6,7 +6,7 @@ metadata:
   name: cluster-apps-guacamole
   namespace: flux-system
   labels:
-    substitution.flux.home.arpa/enabled: "true"
+    substitution.flux.home.arpa/enabled: 'true'
 spec:
   path: ./kubernetes/apps/utils/guacamole/app
   prune: true

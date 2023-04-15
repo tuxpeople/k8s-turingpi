@@ -29,13 +29,13 @@ spec:
       repository: docker.io/maxwaldorf/guacamole
       tag: 1.5.0
     env:
-      TZ: "${TIMEZONE}"
-      GUACD_HOSTNAME: "guac.${SECRET_DOMAIN}"
+      TZ: ${TIMEZONE}
+      GUACD_HOSTNAME: guac.${SECRET_DOMAIN}
     controller:
       replicas: 1
       strategy: RollingUpdate
       annotations:
-        reloader.stakater.com/auto: "true"
+        reloader.stakater.com/auto: 'true'
     service:
       main:
         type: LoadBalancer
@@ -46,21 +46,21 @@ spec:
       main:
         enabled: true
         annotations:
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "remote-desktop"
-          hajimari.io/group: "utils"
+          hajimari.io/enable: 'true'
+          hajimari.io/icon: remote-desktop
+          hajimari.io/group: utils
           kubernetes.io/ingress.class: nginx
-          external-dns/is-public: "true"
-          external-dns.alpha.kubernetes.io/target: "${SECRET_CLOUDFLARE_TUNNEL_ID}.cfargotunnel.com"
-          nginx.ingress.kubernetes.io/cors-allow-methods: "PUT, GET, POST, OPTIONS"
+          external-dns/is-public: 'true'
+          external-dns.alpha.kubernetes.io/target: ${SECRET_CLOUDFLARE_TUNNEL_ID}.cfargotunnel.com
+          nginx.ingress.kubernetes.io/cors-allow-methods: PUT, GET, POST, OPTIONS
           # nginx.ingress.kubernetes.io/proxy-body-size: 1024m
           # nginx.ingress.kubernetes.io/proxy-connect-timeout: "30"
           # nginx.ingress.kubernetes.io/proxy-read-timeout: "1800"
           # nginx.ingress.kubernetes.io/proxy-send-timeout: "1800"
         hosts:
-          - host: &host "guac.${SECRET_DOMAIN}"
+          - host: &host guac.${SECRET_DOMAIN}
             paths:
-              - path: ""
+              - path: ''
                 pathType: ImplementationSpecific
         tls:
           - hosts:
