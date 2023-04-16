@@ -40,13 +40,13 @@ spec:
       - name: grafana
     grafana.ini:
       server:
-        root_url: https://grafana.${SECRET_DOMAIN}
+        root_url: https://grafana.${SECRET_DOMAIN_K8S}
       security:
         cookie_secure: true
       log.console:
         level: debug
       auth:
-        signout_redirect_url: https://auth.${SECRET_DOMAIN}/logout
+        signout_redirect_url: https://auth.${SECRET_DOMAIN_K8S}/logout
         oauth_auto_login: false
       auth.generic_oauth:
         enabled: true
@@ -56,9 +56,9 @@ spec:
         client_secret: ${SECRET_OIDC_CLIENT_SECRET_GRAFANA}
         scopes: openid profile email groups
         empty_scopes: false
-        auth_url: https://auth.${SECRET_DOMAIN}/api/oidc/authorization
-        token_url: https://auth.${SECRET_DOMAIN}/api/oidc/token
-        api_url: https://auth.${SECRET_DOMAIN}/api/oidc/userinfo
+        auth_url: https://auth.${SECRET_DOMAIN_K8S}/api/oidc/authorization
+        token_url: https://auth.${SECRET_DOMAIN_K8S}/api/oidc/token
+        api_url: https://auth.${SECRET_DOMAIN_K8S}/api/oidc/userinfo
         login_attribute_path: preferred_username
         groups_attribute_path: groups
         name_attribute_path: name
@@ -285,7 +285,7 @@ spec:
     ingress:
       enabled: true
       hosts:
-        - grafana.${SECRET_DOMAIN}
+        - grafana.${SECRET_DOMAIN_K8S}
       annotations:
         kubernetes.io/ingress.class: nginx
         external-dns/is-public: "true"
@@ -295,7 +295,7 @@ spec:
       tls:
         - secretName: ${SECRET_DOMAIN//./-}-tls
           hosts:
-            - grafana.${SECRET_DOMAIN}
+            - grafana.${SECRET_DOMAIN_K8S}
     enabled: true
     persistence:
       enabled: false

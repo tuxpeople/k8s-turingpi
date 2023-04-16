@@ -13,9 +13,9 @@ spec:
   tls:
     - secretName: ${SECRET_DOMAIN//./-}-tls
       hosts:
-        - notifiarr.${SECRET_DOMAIN}
+        - notifiarr.${SECRET_DOMAIN_K8S}
   rules:
-    - host: notifiarr.${SECRET_DOMAIN}
+    - host: notifiarr.${SECRET_DOMAIN_K8S}
       http:
         paths:
           - path: /
