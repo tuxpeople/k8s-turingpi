@@ -6,7 +6,7 @@ metadata:
   namespace: monitoring
 spec:
   friendlyName: K8S grafana
-  url: https://grafana.${SECRET_DOMAIN_K8S}
+  url: https://grafana.${SECRET_DOMAIN}
   type: HTTPS
   httpMethod: GET
   interval: 300

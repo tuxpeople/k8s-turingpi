@@ -44,7 +44,7 @@ spec:
         data:
           sharry.conf: |
             sharry.restserver {
-              # base-url = "https://share.${SECRET_DOMAIN_K8S}"
+              # base-url = "https://share.${SECRET_DOMAIN}"
               bind {
                 address = "0.0.0.0"
                 port = {{ .Values.service.main.ports.http.port }}
@@ -66,9 +66,9 @@ spec:
                         id = "internal"
                         name = "Homelab Account"
                         icon = "fas fa-address-book"
-                        authorize-url = "https://auth.${SECRET_DOMAIN_K8S}/api/oidc/authorization"
-                        token-url = "https://auth.${SECRET_DOMAIN_K8S}/api/oidc/token"
-                        user-url = "https://auth.${SECRET_DOMAIN_K8S}/api/oidc/userinfo"
+                        authorize-url = "https://auth.${SECRET_DOMAIN}/api/oidc/authorization"
+                        token-url = "https://auth.${SECRET_DOMAIN}/api/oidc/token"
+                        user-url = "https://auth.${SECRET_DOMAIN}/api/oidc/userinfo"
                         user-id-key = "login"
                         client-id = "sharry"
                         client-secret = "${SHARRY_CLIENT_SECRET}"
@@ -108,17 +108,17 @@ spec:
         enabled: true
         ingressClassName: nginx
         annotations:
-          external-dns.alpha.kubernetes.io/target: ipv4.${SECRET_DOMAIN_K8S}
+          external-dns.alpha.kubernetes.io/target: ipv4.${SECRET_DOMAIN}
           hajimari.io/icon: file-arrow-up-down-outline
         hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN_K8S}"
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
               - *host
-            secretName: ${SECRET_DOMAIN_K8S//./-}-tls
+            secretName: ${SECRET_DOMAIN//./-}-tls
     resources:
       requests:
         cpu: 5m
