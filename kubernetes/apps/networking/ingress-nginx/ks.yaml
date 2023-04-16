@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-    # - name: cluster-apps-ingress-nginx-certificates
+    - name: cluster-apps-cert-manager-certificates
     - name: cluster-apps-metallb-config
   path: ./kubernetes/apps/networking/ingress-nginx/app
   prune: true
@@ -20,4 +20,4 @@ spec:
       namespace: networking
   interval: 30m
   retryInterval: 1m
-  timeout: 3m
+  timeout: 5m
