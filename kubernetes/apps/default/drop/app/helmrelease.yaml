@@ -63,6 +63,6 @@ spec:
         accessMode: ReadWriteOnce
         size: 5Gi
         mountPath: /config
-        storageClass: synology-csi-delete
+        storageClass: nfs-csi
     env:
       TZ: ${TIMEZONE}
