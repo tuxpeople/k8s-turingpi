@@ -8,6 +8,11 @@
       "automergeType": "branch",
       "ignoreTests": true,
       "matchUpdateTypes": ["minor", "patch", "digest"]
+    },
+    {
+      "description": "Auto merge others",
+      "automerge": true,
+      "matchUpdateTypes": ["minor", "patch"]
     }
   ]
 }
